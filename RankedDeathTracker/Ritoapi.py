@@ -41,7 +41,7 @@ class Ritoapi(object):
         args = {'api_key': self.api_key}
         return self._requests(api_url, args)
 
-    def get_past_20_ranked_solo(self, id):
+    def get_past_ranked_solo(self, id):
         api_url = Consts.URL['match_by_queue'].format(
             accountId=id
             )
@@ -51,7 +51,24 @@ class Ritoapi(object):
                }
         return self._requests(api_url, args)
 
+    def get_timeline(self,id):
+        api_url = Consts.URL['match_timeline'].format(
+            matchId=id
+            )
+        args = {'api_key': self.api_key 
+               }
+        return self._requests(api_url, args)
+
+    def get_match(self, id):
+        api_url = Consts.URL['match_info'].format(
+            matchId=id
+            )
+        args = {'api_key': self.api_key
+               }
+        return self._requests(api_url,args)
+
     def get_maps(self):
         api_url = Consts.URL['maps']
-        args = {'api_key': self.api_key}
+        args = {'api_key': self.api_key
+               }
         return self._requests(api_url, args)

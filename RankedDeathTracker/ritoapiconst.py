@@ -4,7 +4,9 @@ URL = {
 	'summoner_by_name': '/lol/summoner/v3/summoners/by-name/{summonerName}',
     'match_by_queue' : '/lol/match/v3/matchlists/by-account/{accountId}',
     'maps': '/lol/static-data/v3/maps',
-    'current_game_data': '/lol/spectator/v3/active-games/by-summoner/{summonerId}'
+    'current_game_data': '/lol/spectator/v3/active-games/by-summoner/{summonerId}',
+    'match_timeline': '/lol/match/v3/timelines/by-match/{matchId}',
+    'match_info': '/lol/match/v3/matches/{matchId}'
 }
 
 REGIONS = {
