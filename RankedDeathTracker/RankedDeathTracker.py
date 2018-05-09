@@ -5,7 +5,7 @@ import matplotlib.image as mpimg
 import matplotlib.colors as mcolors
 from Ritoapi import Ritoapi
 
-#map data domains
+## map data domains
 xmin = -120
 xmax = 14870
 ymin = -120
@@ -14,15 +14,15 @@ ymax = 14980
 xdomain =  xmax - xmin
 ydomain = ymax - ymin
 
-# plot range = image pixels w & h
+## plot range = image pixels w & h
 xrange = 512
 yrange = 512
 
-# domain to range ratio
+## domain to range ratio
 xdom2range = xdomain/xrange
 ydom2range = ydomain/yrange
 
-# plot limits
+## plot limits
 plt.xlim(0,xrange) 
 plt.ylim(0,yrange)
 
@@ -39,30 +39,30 @@ for match in matches['matches']:
     info = api.get_match(match['gameId'])
     timeline = api.get_timeline(match['gameId'])
     frames = timeline['frames']
-    participantId = 6
+    participantId = 6 ## replace with a fetch function to retreive partId from the match data.
 
-    for frame in frames:
-        for event in frame['events']:
-            if event['type'] == 'CHAMPION_KILL':
-                if event['victimId'] == participantId:
+    for frame in frames: ## search each time frame from the match
+        for event in frame['events']: ## search each unique event within the time frame
+            if event['type'] == 'CHAMPION_KILL': ## only interested in character deaths
+                if event['victimId'] == participantId: ## only pull position data for deaths that occur where my character is the victim
                     print (event['position'])
-                    data[i][0] = (event['position']['x']-xmin)
+                    data[i][0] = (event['position']['x']-xmin) ## store co-ordinate data to array
                     data[i][1] = (event['position']['y']-ymin)
                     i += 1
 
 for values in data:
     values[0] = values[0]/xdom2range
     values[1] = values[1]/ydom2range
-print(data)
+print(data) ## print data to console for debugging
 
-# scatter plot over map image   
+## scatter plot over map image   
 plt.figure(1)
 img=mpimg.imread('map11.png')
 imgplot = plt.imshow(img, aspect='equal')
 plt.scatter(* data.T)
 
-# dataset heat map 
-# bins = range/2
+## dataset heat map 
+## bins = range/2
 plt.figure(2)
 heatmap, xedges, yedges = np.histogram2d(data[:,0],data[:,1], bins=(256,256))
 extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
